@@ -4,10 +4,10 @@ from pprint import pprint
 from getpass import getpass
 from netmiko import ConnectHandler
 command = "sh ptp clock  | json-pretty"
-password = "88newclass"
+password = "cisco"
 nxos1 = {
     "host": "nxos1.lasthop.io",
-    "username": "pyclass",
+    "username": "cisco",
     "password": password,
     "device_type": "cisco_nxos",
 }
