@@ -63,7 +63,8 @@ if __name__ == '__main__':
         results = executor.map(open_connection, hosts_info)
         print('\n')
         for result in results:
-            print(result)
+            if result:
+                print(result)
 
     finish = time.perf_counter()
     print('\n')
