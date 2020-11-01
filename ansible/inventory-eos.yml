@@ -1,0 +1,20 @@
+---
+- name: build IOS inventory report
+  hosts: arista
+  connection: network_cli
+  gather_facts: False
+
+  vars:
+    file_path: generated_eos_report.csv
+
+  tasks:
+    - name: gathering eos facts
+      eos_facts:
+      register: all_facts
+
+    - name: create ios report
+      template:
+        src: report-eos.j2
+        dest: "{{ file_path }}"
+      delegate_to: localhost
+      run_once: true

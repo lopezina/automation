@@ -1,0 +1,13 @@
+---
+
+  - name: Auto Generate Files and Directories
+    hosts: all
+    connection: local
+    gather_facts: no
+
+    tasks:
+
+      - name: DELETE DIRECTORIES PREVIOUSLY CREATED BASED ON OS
+        file:
+          path: ./backup
+          state: absent

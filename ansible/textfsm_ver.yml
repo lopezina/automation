@@ -1,0 +1,33 @@
+---
+
+  - name: PARSING SHOW COMMANDS
+    hosts: cisco
+    connection: network_cli
+    gather_facts: no
+
+    vars:
+      template_path: "ntc-templates/templates/"
+      show_version_path: "{{ template_path }}cisco_ios_show_version.textfsm"
+      show_interface_path: "{{ template_path }}cisco_ios_show_interfaces.textfsm"
+
+    tasks:
+
+      - name: GET SHOW COMMANDS
+        ios_command:
+          commands: 
+            - show version
+            - show interfaces
+        register: config_data
+
+
+      - name: PARSE CLI TextFSM SHOW INTERFACE
+        set_fact:
+          show_version: "{{ config_data.stdout[0] | parse_cli_textfsm(show_version_path) }}"
+          show_interface: "{{ config_data.stdout[1] | parse_cli_textfsm(show_interface_path) }}"
+
+      - name: DISPLAY PARSED DATA
+        debug:
+          var: "{{ item }}"
+        loop: 
+          - show_interface
+          - show_version

@@ -1,0 +1,21 @@
+---
+- name: build IOS inventory report
+  hosts: cisco
+  connection: network_cli
+  gather_facts: False
+
+  vars:
+    desired_version: "7.0(3)I7(1)"
+    file_path: generated_ios_report.csv
+
+  tasks:
+    - name: gathering nxos facts
+      ios_facts:
+      register: all_facts
+
+    - name: create ios report
+      template:
+        src: report-ios.j2
+        dest: "{{ file_path }}"
+      delegate_to: localhost
+      run_once: true

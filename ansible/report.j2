@@ -1,0 +1,3 @@
+{% for network_switch in groups['nxos'] %}
+{{hostvars[network_switch]['ansible_net_hostname']}}, {{hostvars[network_switch]['ansible_net_model']}}, {{hostvars[network_switch]['ansible_net_version']}}
+{% endfor %}

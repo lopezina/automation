@@ -1,0 +1,12 @@
+---
+- name: napalm nxos_ssh
+  hosts: nxos1
+  tasks:
+    - name: Retrieve ALLs
+      napalm_get_facts:
+        #filter: facts,interfaces
+        # Instruct NAPALM module to use SSH
+        dev_os: nxos_ssh
+
+    #- debug:
+     #   var: napalm_facts

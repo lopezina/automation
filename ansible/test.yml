@@ -1,0 +1,17 @@
+---
+- name: build IOS inventory report
+  hosts: cisco
+  connection: network_cli
+  gather_facts: False
+
+  vars:
+    file_path: generated_ios_report.csv
+
+  tasks:
+    - name: gathering nxos facts
+      ios_facts:
+      register: all_facts
+
+    - name: display gathered facts
+      debug:
+        var: all_facts.ansible_facts.ansible_net_image

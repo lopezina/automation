@@ -1,0 +1,21 @@
+---
+ - name: PLAY 5 - DEPLOYING SNMP CONFIGURATIONS ON IOS AND JUNOS
+   hosts: cisco,nxos
+   connection: network_cli
+   gather_facts: no
+                
+   vars:
+     vendor_commands:
+       ios: |
+         snmp-server community ntc-team RO
+         snmp-server location FL_HQ        
+         snmp-server contact JAMES_CHARLES
+       nxos: |
+         snmp-server community ntc-team RO
+         snmp-server location FL_HQ        
+         snmp-server contact JAMES_CHARLES
+   tasks:
+    
+       - name: TASK 1 in PLAY 5 - ENSURE SNMP COMMANDS EXIST ON IOS AND VMX DEVICES
+         cli_config:
+           config: "{{ vendor_commands[ansible_network_os] }}"

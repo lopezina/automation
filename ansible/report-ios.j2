@@ -1,0 +1,5 @@
+HOSTNAME, MODEL, SERIAL NUM, IOS VERSION
+{% for network_switch in groups['cisco'] %}
+{{hostvars[network_switch]['ansible_net_hostname']}}, {{hostvars[network_switch]['ansible_net_model']}}, {{hostvars[network_switch]['ansible_net_serialnum']}}, {{hostvars[network_switch]['ansible_net_system']}}, {{hostvars[network_switch]['ansible_net_version']}}
+{% endfor %}
+

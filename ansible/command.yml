@@ -1,0 +1,30 @@
+---
+
+  - name: USING THE COMMAND MODULE
+    hosts: nxos
+    connection: network_cli
+    gather_facts: no
+    
+    vars:
+      file_path: ptp.csv
+
+    tasks:
+      
+      - name: GET PTP OUTPUT
+        ios_command:
+          commands:
+            - "show ptp clock | in 'Offset From Master'"
+
+        register: ptp_output
+      - set_fact:
+          PTP: "{{ ptp_output.stdout_lines.0.0.split(': ').1 }}"
+          
+      - name: DEBUG AND PRINT THE OUTPUT
+        debug: 
+          var: PTP
+      - name: create report
+        template:
+          src: ptp.j2
+          dest: "{{ file_path }}"
+        delegate_to: localhost
+        run_once: true

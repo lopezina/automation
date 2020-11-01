@@ -1,0 +1,31 @@
+---
+- name: "PLAY 1: DEMO OF TEXTFSM"
+  hosts: nxos1
+  connection: network_cli
+  gather_facts: no
+
+  vars:
+    template_path: "ntc-templates/templates/"
+    show_lldp_path: "{{ template_path }}cisco_nxos_show_lldp_neighbors.textfsm"
+  
+  tasks:
+    - name: "TASK 1: GET COMMAND OUTPUT"
+      ios_command:
+        commands:
+          - show lldp neighbors
+      register: lldp_output
+
+    - name: "TASK 2: REGISTER OUTPUT TO DEVICE_NEIGHBORS VARIABLE"
+      set_fact:
+        device_neighbors: "{{ lldp_output.stdout.0 | parse_cli_textfsm(show_lldp_path) }}"
+
+    - name: "TASK 3: PRINT OUTPUT"
+      debug:
+        msg: "{{ device_neighbors }}"
+
+    - name: "TASK 4: PRINT NEIGHBORS"
+      debug:
+        msg: "{{ item['LOCAL_INTERFACE'] }}: {{ item['NEIGHBOR'] }}"
+      loop: "{{ device_neighbors }}"
+    #  loop_control:
+    #    label: "{{ item['LOCAL_INTERFACE'] }}"

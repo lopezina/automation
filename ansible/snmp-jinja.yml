@@ -1,0 +1,17 @@
+---               
+    - name: PLAY 3 - DEPLOYING SNMP CONFIGURATIONS ON IOS USING A VARIABLE
+      hosts: cisco
+      connection: network_cli
+      gather_facts: no
+                
+      vars:
+        ios_commands: | 
+             snmp-server community supersecret RO
+             snmp-server location FL_HQ        
+             snmp-server contact JAMES_CHARLES
+
+      tasks:
+    
+          - name: TASK 1 in PLAY 3 - ENSURE SNMP COMMANDS EXIST ON IOS DEVICES
+            cli_config:
+              config: "{{ ios_commands }}"

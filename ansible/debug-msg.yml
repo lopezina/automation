@@ -1,0 +1,13 @@
+---
+
+  - name: USING THE DEBUG MODULE
+    hosts: all
+    connection: local
+    gather_facts: no
+
+
+    tasks:
+      - name: DEBUG AND PRINT THE OS
+        debug: 
+          msg: "The OS for {{ inventory_hostname }} is {{ ansible_network_os }}."
+

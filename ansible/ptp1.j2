@@ -1,0 +1,3 @@
+{% for network_switch in groups['nxos'] %}
+  {{hostvars[network_switch]['inventory_hostname']}}, {{hostvars[network_switch]['PTP']}}
+{% endfor %}
